@@ -1,0 +1,30 @@
+# Build and install artifacts
+build/
+install/
+log/
+
+# Python cache
+**/__pycache__/
+*.pyc
+
+# CMake and colcon
+CMakeFiles/
+CMakeCache.txt
+colcon_install_layout.*
+*.swp
+*.swo
+
+# IDE-specific
+.vscode/
+.idea/
+
+# ROS 2 specific tools
+.launch/
+.launch.pyc
+
+# Misc
+*.log
+*.DS_Store
+
+# Nix
+result*
