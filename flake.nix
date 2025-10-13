@@ -110,8 +110,11 @@
                 curl
               ]
             );
-            # Without this, rviz2 fails to start correctly for some reason
-            QT_QPA_PLATFORM = "xcb";
+            shellHook = ''
+              export QT_QPA_PLATFORM=xcb
+              colcon build --symlink-install
+              source install/setup.bash
+            '';`
           };
           # https://flake.parts/overlays.html
           _module.args.pkgs = import inputs.nixpkgs {
