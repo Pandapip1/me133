@@ -114,7 +114,7 @@
               export QT_QPA_PLATFORM=xcb
               colcon build --symlink-install
               source install/setup.bash
-            '';`
+            '';
           };
           # https://flake.parts/overlays.html
           _module.args.pkgs = import inputs.nixpkgs {
