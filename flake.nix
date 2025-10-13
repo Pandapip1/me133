@@ -74,6 +74,11 @@
                   ament-cmake
                   ament-cmake-core
                   python-cmake-module
+                  # Atlas deps
+                  xacro
+                  robot-state-publisher
+                  joint-state-publisher-gui
+                  rviz2
                 ]
                 ++ (with pkgs; [
                   colcon
@@ -105,6 +110,8 @@
                 curl
               ]
             );
+            # Without this, rviz2 fails to start correctly for some reason
+            QT_QPA_PLATFORM = "xcb";
           };
           # https://flake.parts/overlays.html
           _module.args.pkgs = import inputs.nixpkgs {
