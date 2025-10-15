@@ -28,3 +28,6 @@ colcon_install_layout.*
 
 # Nix
 result*
+
+# Bags
+rosbag2*/

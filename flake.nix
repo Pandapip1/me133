@@ -79,6 +79,9 @@
                   robot-state-publisher
                   joint-state-publisher-gui
                   rviz2
+                  # Plotjoints.py deps
+                  rosbag2
+                  rosbag2-py
                 ]
                 ++ (with pkgs; [
                   colcon
@@ -108,6 +111,12 @@
               with pkgs;
               [
                 curl
+              ]
+            ) ++ (
+              with pkgs.python3Packages; [
+                python
+                numpy
+                matplotlib
               ]
             );
             shellHook = ''
