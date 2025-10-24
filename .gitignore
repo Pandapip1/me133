@@ -1,3 +1,5 @@
+.venv
+
 # Build and install artifacts
 build/
 install/

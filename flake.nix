@@ -82,6 +82,8 @@
                   # Plotjoints.py deps
                   rosbag2
                   rosbag2-py
+                  # More deps
+                  urdfdom-py
                 ]
                 ++ (with pkgs; [
                   colcon

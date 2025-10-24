@@ -27,6 +27,42 @@ from utils.TransformHelpers     import *
 
 
 #
+#   Trajectory Class
+#
+#   Pulling the computations out, to make it easier to read?
+#
+
+class Trajectory():
+    # Initialization.
+    def __init__(self):
+        # Initialize any variables that you want to store between cycles!
+        pass
+
+    # Declare the joint names.
+    def jointnames(self):
+        # Return a list of joint names MATCHING THE JOINT NAMES IN THE URDF!
+        return ['pan', 'tilt']
+
+    # Evaluate at the given time and time step since last call.
+    def evaluate(self, t, dt):
+
+        # Compute the joint values.  For now, we do this individually
+        # before building up numpy arrays.
+        theta_pan = np.pi / 3 * np.sin(2 * t)
+        omega_pan = 2 * np.pi / 3 * np.cos(2 * t)
+
+        theta_tilt = np.pi / 3 * np.sin(1 * t) - np.pi / 9 * np.cos(6 * t)
+        omega_tilt = np.pi / 3 * np.cos(1 * t) + 6 * np.pi / 9 * np.sin(6 * t)
+
+        # We build up numpy arrays, consistent with future computations.
+        q    = np.array([theta_pan, theta_tilt])
+        qdot = np.array([omega_pan, omega_tilt])
+
+        # Return as NumPy arrays
+        return(q, qdot)
+
+
+#
 #   Trajectory Generator Node Class
 #
 #   This inherits all the standard ROS node stuff, but adds an
@@ -45,12 +81,9 @@ class TrajectoryNode(Node):
         ##############################################################
         # INITIALIZE YOUR TRAJECTORY DATA!
 
-        FIXME!  For now remove this line.  In the future, edit here!
-
-        # Define the list of joint names MATCHING THE JOINT NAMES IN THE URDF!
-        self.jointnames = ['pan', 'tilt']
-
-        # Initialize any variables that you want to store between cycles!
+        # We pull this into the above object.
+        self.trajectory = Trajectory()
+        self.jointnames = self.trajectory.jointnames()
 
 
         ##############################################################
@@ -89,19 +122,8 @@ class TrajectoryNode(Node):
         ##############################################################
         # COMPUTE THE TRAJECTORY AT THIS TIME INSTANCE.
 
-        FIXME!  Adjust these computations (and remove this line)
-
-        # Compute the joint values.  For now, we do this individually
-        # before building up numpy arrays.
-        theta_pan  = -1.0 * self.t
-        omega_pan  = -1.0
-
-        theta_tilt =  2.0 * self.t
-        omega_tilt =  2.0
-
-        # We build up numpy arrays, consistent with future computations.
-        q    = np.array([theta_pan, theta_tilt])
-        qdot = np.array([omega_pan, omega_tilt])
+        # Compute the joint positions and velocities in the trajectory.
+        (q, qdot) = self.trajectory.evaluate(self.t, self.dt)
 
 
         ##############################################################
